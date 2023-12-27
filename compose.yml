@@ -40,7 +40,7 @@ services:
       dockerfile: ./.docker/docker/nginx/Dockerfile
     ports:
       - target: 80
-        published: ${WEB_PUBLISHED_PORT:-8800}
+        published: ${WEB_PUBLISHED_PORT:-8900}
         protocol: tcp
         mode: host
     volumes:
@@ -54,7 +54,7 @@ services:
       dockerfile: ./.docker/docker/mysql/Dockerfile
     ports:
       - target: 3306
-        published: ${DB_PUBLISHED_PORT:-3307}
+        published: ${DB_PUBLISHED_PORT:-3309}
         protocol: tcp
         mode: host
     configs:
@@ -72,13 +72,13 @@ services:
       - MYSQL_PASSWORD=${DB_PASSWORD:-root}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-root}
 
-  mailpit:
-    image: axllent/mailpit
-    ports:
-      - target: 8025
-        published: ${MAILPIT_PUBLISHED_PORT:-8025}
-        protocol: tcp
-        mode: host
+  # mailpit:
+  #   image: axllent/mailpit
+  #   ports:
+  #     - target: 8025
+  #       published: ${MAILPIT_PUBLISHED_PORT:-8026}
+  #       protocol: tcp
+  #       mode: host
 
   phpmyadmin:
     container_name: laravel-phpmyadmin1
@@ -86,7 +86,7 @@ services:
     restart: always
     ports:
       - target: 80
-        published: ${PHPMYADMIN_PORT:-8888}
+        published: ${PHPMYADMIN_PORT:-8889}
         protocol: tcp
         mode: host
     depends_on:
