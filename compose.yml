@@ -8,6 +8,7 @@ configs:
 
 services:
   app:
+    restart: always
     build:
       context: .
       dockerfile: ./.docker/docker/php/Dockerfile
@@ -35,6 +36,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD:-root}
 
   web:
+    restart: always
     build:
       context: .
       dockerfile: ./.docker/docker/nginx/Dockerfile
@@ -48,29 +50,29 @@ services:
         source: ./backend
         target: /workspace
 
-  db:
-    build:
-      context: .
-      dockerfile: ./.docker/docker/mysql/Dockerfile
-    ports:
-      - target: 3306
-        published: ${DB_PUBLISHED_PORT:-3309}
-        protocol: tcp
-        mode: host
-    configs:
-      - source: db-config
-        target: /etc/my.cnf
-    volumes:
-      - type: volume
-        source: db-store
-        target: /var/lib/mysql
-        volume:
-          nocopy: true
-    environment:
-      - MYSQL_DATABASE=${DB_DATABASE:-laravel}
-      - MYSQL_USER=${DB_USERNAME:-laravel}
-      - MYSQL_PASSWORD=${DB_PASSWORD:-root}
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-root}
+  # db:
+  #   build:
+  #     context: .
+  #     dockerfile: ./.docker/docker/mysql/Dockerfile
+  #   ports:
+  #     - target: 3306
+  #       published: ${DB_PUBLISHED_PORT:-3309}
+  #       protocol: tcp
+  #       mode: host
+  #   configs:
+  #     - source: db-config
+  #       target: /etc/my.cnf
+  #   volumes:
+  #     - type: volume
+  #       source: db-store
+  #       target: /var/lib/mysql
+  #       volume:
+  #         nocopy: true
+  #   environment:
+  #     - MYSQL_DATABASE=${DB_DATABASE:-laravel}
+  #     - MYSQL_USER=${DB_USERNAME:-laravel}
+  #     - MYSQL_PASSWORD=${DB_PASSWORD:-root}
+  #     - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-root}
 
   # mailpit:
   #   image: axllent/mailpit
@@ -80,17 +82,17 @@ services:
   #       protocol: tcp
   #       mode: host
 
-  phpmyadmin:
-    container_name: laravel-phpmyadmin1
-    image: phpmyadmin:latest
-    restart: always
-    ports:
-      - target: 80
-        published: ${PHPMYADMIN_PORT:-8889}
-        protocol: tcp
-        mode: host
-    depends_on:
-      - db
+  # phpmyadmin:
+  #   container_name: laravel-phpmyadmin1
+  #   image: phpmyadmin:latest
+  #   restart: always
+  #   ports:
+  #     - target: 80
+  #       published: ${PHPMYADMIN_PORT:-8889}
+  #       protocol: tcp
+  #       mode: host
+  #   depends_on:
+  #     - db
 
  
 
