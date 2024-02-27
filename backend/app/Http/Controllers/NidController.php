@@ -35,7 +35,7 @@ class NidController extends Controller
             "father" => "মান্নান",
             "mother" => "নাহার",
             "spouse" => "নাহার",
-            "dateOfBirth" => fake()->date(),
+            "dateOfBirth" => $request->dateOfBirth,
             "permanentAddress" => [
                 "division" => "রংপুর",
                 "district" => "দিনাজপুর",
